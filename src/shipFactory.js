@@ -1,25 +1,21 @@
 export default function ShipFactory(len) {
-  // Your ‘ships’ will be objects that include their length,
-  // where they’ve been isHit and whether or not they’ve been sunk.
-  const length = [];
-  (() => {
-    for (let i = 0; i < len; i += 1) {
-      length.push(false);
-    }
-  })();
+  let hp = len;
 
-  // a isHit() function that takes a number and then marks that position as ‘hit’.
-  function isHit(indx) {
-    length[indx] = true;
-    return length;
+  // returns isSunk()
+  function isHit() {
+    if (hp > 0) {
+      hp -= 1;
+      return hp === 0;
+    }
+    return true;
   }
-  // isSunk() should be a function that calculates it based on their length
-  // and whether all of their positions are ‘hit’.
+
   function isSunk() {
-    return length.every((element) => element === true);
+    return hp <= 0;
   }
+
   return {
-    getLength: () => length,
+    hp: () => hp,
     isHit,
     isSunk,
   };
