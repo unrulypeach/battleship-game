@@ -5,9 +5,9 @@ export default function ShipFactory(len) {
   function isHit() {
     if (hp > 0) {
       hp -= 1;
-      return hp === 0;
+      return true;
     }
-    return true;
+    return 'dead';
   }
 
   function isSunk() {

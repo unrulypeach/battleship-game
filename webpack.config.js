@@ -7,6 +7,8 @@ module.exports = {
     index: './src/index.js',
     ship: './src/shipFactory.js',
     board: './src/gameboard.js',
+    player: './src/player.js',
+    // computer: './src/computerPlayer.js',
   },
   devServer: {
     static: './dist',
