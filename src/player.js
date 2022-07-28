@@ -1,66 +1,41 @@
 import GameboardFactory from './gameboard';
+import * as Helper from './helpers';
 
 export default function player() {
   // Players can take turns playing the game
   // by attacking the enemy Gameboard.
-  const pBoard = Object.create(GameboardFactory());
-  const botBoard = Object.create(GameboardFactory());
+  function play(opponentsBoard) {
 
-  const fleet = [
-    {
-      spaces: 5,
-      gamePiece: 'car',
-    },
-    {
-      spaces: 4,
-      gamePiece: 'bat',
-    },
-    {
-      spaces: 3,
-      gamePiece: 'cru',
-    },
-    {
-      spaces: 2,
-      gamePiece: 'des1',
-    },
-    {
-      spaces: 2,
-      gamePiece: 'des2',
-    },
-  ];
-  // player placeShip setup
+  }
+  // ‘computer’ players capable of making random plays.
+  // it should know whether or not a given move is legal.
+  const prevHits = [];
 
-  // bot placeShip setup
-  function placeAShipRandomly(size) {
-    const random1 = Math.floor(Math.random() * 10);
-    const random2 = Math.floor(Math.random() * 10);
-    if (botBoard.placeShip(size, random1, random2) !== false) {
-      botBoard.placeShip(size, random1, random2);
-    } else {
-      placeAShipRandomly(size);
+  function botPlay(gbObj) {
+    const rand1 = Helper.randNum();
+    const rand2 = Helper.randNum();
+    const randComb = `${rand1} ${rand2}`;
+    const randHit = gbObj.receiveAttack(rand1, rand2);
+
+    if (randHit === 'fired and missed') {
+      prevHits.push(randComb);
+      return randHit;
+    } if (randHit === true) {
+      if (prevHits.includes(randComb)) {
+        botPlay(gbObj);
+      } else {
+        return randHit;
+      }
+    } if (randHit === 'fail' || randHit === false) {
+      botPlay(gbObj);
     }
   }
-
-  function placeAllShipsRandomly() {
-    fleet.forEach((ele) => {
-      // placeShip returns false if overlapping
-      placeAShipRandomly(ele.spaces);
-    });
-  }
-
-  // The game is played against the computer,
-  // so make ‘computer’ players capable of making random plays.
-  // The AI does not have to be smart,
-  // but it should know whether or not a given move is legal.
-  // (i.e. it shouldn’t shoot the same coordinate twice).
-
   return {
-    pGb: () => pBoard.gb(),
-    botGb: () => botBoard.gb(),
-    placeAShipRandomly,
-    placeAllShipsRandomly,
+    botPlay,
+    history: () => prevHits,
   };
 }
-const x = Object.create(player());
-x.placeAllShipsRandomly();
-x.botGb();
+const board = Object.create(GameboardFactory());
+const playe = Object.create(player());
+playe.botPlay(board);
+playe.history();

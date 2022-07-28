@@ -7,7 +7,7 @@ export default function ShipFactory(len) {
       hp -= 1;
       return true;
     }
-    return 'dead';
+    return false;
   }
 
   function isSunk() {

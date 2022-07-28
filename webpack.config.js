@@ -8,7 +8,6 @@ module.exports = {
     ship: './src/shipFactory.js',
     board: './src/gameboard.js',
     player: './src/player.js',
-    // computer: './src/computerPlayer.js',
   },
   devServer: {
     static: './dist',
@@ -16,6 +15,9 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'battleship',
+      hash: true,
+      template: './src/index.html',
+      filename: './index.html',
     }),
   ],
   output: {

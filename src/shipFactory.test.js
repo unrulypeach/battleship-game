@@ -19,7 +19,7 @@ test('ship can be hit until sunk', () => {
   mockShip.isHit();
   mockShip.isHit();
   mockShip.isHit();
-  expect(mockShip.isHit()).toEqual('dead');
+  expect(mockShip.isHit()).toBeFalsy();
 });
 
 test.skip('ship length array is initialized', () => {

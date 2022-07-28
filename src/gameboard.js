@@ -1,9 +1,9 @@
+/* eslint-disable max-len */
 import ShipFactory from './shipFactory';
 
 export default function GameboardFactory() {
   const board = [
-    // eslint-disable-next-line no-multi-spaces, array-bracket-spacing
-    [ 'a',  'b',  'c',  'd',  'e',  'f',  'g',  'h',  'i',  'j'], // 0
+    [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined], // 0
     [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined], // 1
     [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined], // 2
     [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined], // 3
@@ -13,28 +13,45 @@ export default function GameboardFactory() {
     [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined], // 7
     [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined], // 8
     [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined], // 9
-    [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined], // 10
   ];
   // Gameboards should be able to place ships at
   // specific coordinates by calling the ship factory function.
-  function placeShip(shipNum, yStart, xStart, isVertical) {
-    const ship = Object.create(ShipFactory(shipNum));
-    if (isVertical === false || typeof isVertical === 'undefined') {
-      for (let i = 0; i < shipNum; i += 1) {
-        if (board[yStart][xStart + i] !== undefined) {
-          return false;
+  function canPlaceShip(yStart, xStart) {
+    // check that neighbor squares are not ships/objs otherwise return;
+    const y = yStart - 1 >= 0 ? yStart - 1 : 0;
+    const x = xStart - 1 >= 0 ? xStart - 1 : 0;
+    const yEnd = yStart + 1 <= 9 ? yStart + 1 : 9;
+    const xEnd = xStart + 1 <= 9 ? xStart + 1 : 9;
+
+    for (let i = y; i <= yEnd; i += 1) {
+      for (let j = x; j <= xEnd; j += 1) {
+        if (typeof board[i][j] === 'object') {
+          return;
         }
       }
+    }
+  }
+
+  function placeShip(shipNum, yStart, xStart, isVertical) {
+    const ship = Object.create(ShipFactory(shipNum));
+
+    // horizontal
+    if (isVertical === false || typeof isVertical === 'undefined') {
+      if (shipNum + xStart > 9) {
+        return;
+      }
+      canPlaceShip(yStart, xStart);
       for (let i = 0; i < shipNum; i += 1) {
         board[yStart][xStart + i] = ship;
       }
       return `${yStart} & ${xStart + shipNum - 1}`;
+
+    // vertical
     } if (isVertical === true) {
-      for (let i = 0; i < shipNum; i += 1) {
-        if (board[yStart + i][xStart] !== undefined) {
-          return false;
-        }
+      if (shipNum + yStart > 9) {
+        return;
       }
+      canPlaceShip(yStart, xStart);
       for (let i = 0; i < shipNum; i += 1) {
         board[yStart + i][xStart] = ship;
       }
@@ -46,9 +63,11 @@ export default function GameboardFactory() {
     const square = board[y][x];
     if (square === undefined) {
       board[y][x] = true;
-      return 'FAIL';
+      return 'fired and missed';
     } if (typeof square === 'object') {
       return square.isHit();
+    } if (square === true) {
+      return 'fail';
     }
   }
 
@@ -56,7 +75,7 @@ export default function GameboardFactory() {
   // DOES NOT WORK!!!!!!!!!!!!!!!!
   function gameOver() {
     const allBoats = [];
-    for (let i = 1; i < 11; i += 1) {
+    for (let i = 1; i < 10; i += 1) {
       if (board[i].some((ele) => typeof ele === 'object')) {
         for (let j = 1; j < 11; j += 1) {
           if (typeof board[i][j] === 'object') {
@@ -76,5 +95,3 @@ export default function GameboardFactory() {
     gameOver,
   };
 }
-
-const x = Object.create(GameboardFactory());

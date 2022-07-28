@@ -1,0 +1,8 @@
+.boardCont{
+  display: grid;
+  grid-template-columns: repeat(10, 50px);
+}
+.cell{
+  height: 50px;
+  border: solid 1px black;
+}
