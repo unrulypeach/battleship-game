@@ -57,11 +57,17 @@ const game = () => {
 };
 
 (() => {
-  for (let i = 0; i < 100; i += 1) {
-    const gridCell = document.createElement('span');
-    gridCell.id = i;
-    gridCell.classList.add('cell');
-    const botDiv = document.querySelector('.bot');
-    botDiv.appendChild(gridCell);
-  }
+  const boardContainerList = document.querySelectorAll('.boardCont');
+  boardContainerList.forEach((x) => {
+    const div = document.createElement('div');
+    div.classList.add('boardCells');
+    for (let i = 0; i < 100; i += 1) {
+      const gridCell = document.createElement('span');
+      gridCell.id = i;
+      gridCell.classList.add('cell');
+      gridCell.style.height = '20px';
+      div.append(gridCell);
+    }
+    x.appendChild(div);
+  });
 })();

@@ -71,8 +71,6 @@ export default function GameboardFactory() {
     }
   }
 
-  // Gameboards should be able to report whether or not all of their ships have been sunk.
-  // DOES NOT WORK!!!!!!!!!!!!!!!!
   function gameOver() {
     const allBoats = [];
     for (let i = 1; i < 10; i += 1) {

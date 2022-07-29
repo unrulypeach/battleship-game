@@ -1,8 +1,29 @@
-.boardCont{
+h1{
+  text-align: center;
+}
+.gameCont{
+  display: flex;
+  justify-content: space-between;
+}
+.boardCells{
+  display: inline-grid;
+  grid-template-columns: repeat(10, 20px);
+}
+.topRow{
   display: grid;
-  grid-template-columns: repeat(10, 50px);
+  grid-template-columns: repeat(11, 20px);
+}
+.topRow > span {
+  text-align: center;
+}
+.leftCol{
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.leftCol > span {
+  height: 21px;
 }
 .cell{
-  height: 50px;
   border: solid 1px black;
 }
