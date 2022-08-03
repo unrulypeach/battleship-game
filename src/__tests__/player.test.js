@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-import GameboardFactory from './gameboard';
-import player from './player';
+import GameboardFactory from '../gameboard';
+import player from '../player';
 
 test.skip('can place one ship', () => {
   const person = Object.create(player());

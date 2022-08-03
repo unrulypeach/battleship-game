@@ -31,15 +31,17 @@ h1{
   border: dashed 3px red;
 }
 .pieces{
-  border: solid 1px salmon;
+  padding: 3px;
+  border: solid 2px salmon;
 }
 .ship{
-  display: inline-flex;
-  border: solid 1px black;
+  background-color: salmon;
+  /* display: inline-flex;
+  border: solid 1px black; */
 }
-.ship > span {
+/* .ship > span {
   display: inline-block;
   background-color: rgba(122, 145, 138, 0.753);
   height: 20px;
   width: 20px;
-}
+} */

@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import GameboardFactory from './gameboard';
+import GameboardFactory from '../gameboard';
 
 const player = Object.create(GameboardFactory());
 

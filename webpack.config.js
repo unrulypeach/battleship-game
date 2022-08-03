@@ -8,6 +8,9 @@ module.exports = {
     ship: './src/shipFactory.js',
     board: './src/gameboard.js',
     player: './src/player.js',
+    dom: './src/dom.js',
+    play: './src/gameplayFn.js',
+    move: './src/moveShips.js',
   },
   devServer: {
     static: './dist',

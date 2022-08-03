@@ -16,20 +16,29 @@ export default function GameboardFactory() {
   ];
   // Gameboards should be able to place ships at
   // specific coordinates by calling the ship factory function.
-  function canPlaceShip(yStart, xStart) {
+  function canPlaceShip(length, yStart, xStart, isVertical) {
     // check that neighbor squares are not ships/objs otherwise return;
     const y = yStart - 1 >= 0 ? yStart - 1 : 0;
     const x = xStart - 1 >= 0 ? xStart - 1 : 0;
-    const yEnd = yStart + 1 <= 9 ? yStart + 1 : 9;
-    const xEnd = xStart + 1 <= 9 ? xStart + 1 : 9;
+    let yEnd;
+    let xEnd;
+
+    if (isVertical === true) {
+      yEnd = (yStart + length + 1) <= 9 ? yStart + length + 1 : 9;
+      xEnd = xStart + 1 <= 9 ? xStart + 1 : 9;
+    } else {
+      yEnd = yStart + 1 <= 9 ? yStart + 1 : 9;
+      xEnd = (xStart + length + 1) <= 9 ? xStart + length + 1 : 9;
+    }
 
     for (let i = y; i <= yEnd; i += 1) {
       for (let j = x; j <= xEnd; j += 1) {
         if (typeof board[i][j] === 'object') {
-          return;
+          return false;
         }
       }
     }
+    return true;
   }
 
   function placeShip(shipNum, yStart, xStart, isVertical) {
@@ -38,25 +47,28 @@ export default function GameboardFactory() {
     // horizontal
     if (isVertical === false || typeof isVertical === 'undefined') {
       if (shipNum + xStart > 9) {
-        return;
+        return false;
       }
-      canPlaceShip(yStart, xStart);
-      for (let i = 0; i < shipNum; i += 1) {
-        board[yStart][xStart + i] = ship;
+      if (canPlaceShip(shipNum, yStart, xStart, isVertical)) {
+        for (let i = 0; i < shipNum; i += 1) {
+          board[yStart][xStart + i] = ship;
+        }
+        return true;
       }
-      return `${yStart} & ${xStart + shipNum - 1}`;
-
+      return false;
     // vertical
     } if (isVertical === true) {
       if (shipNum + yStart > 9) {
-        return;
+        return false;
       }
-      canPlaceShip(yStart, xStart);
-      for (let i = 0; i < shipNum; i += 1) {
-        board[yStart + i][xStart] = ship;
+      if (canPlaceShip(shipNum, yStart, xStart, isVertical)) {
+        for (let i = 0; i < shipNum; i += 1) {
+          board[yStart + i][xStart] = ship;
+        }
+        return true;
       }
-      return `${yStart + shipNum - 1} & ${xStart}`;
     }
+    return false;
   }
 
   function receiveAttack(y, x) {

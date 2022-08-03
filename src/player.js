@@ -35,7 +35,3 @@ export default function player() {
     history: () => prevHits,
   };
 }
-const board = Object.create(GameboardFactory());
-const playe = Object.create(player());
-playe.botPlay(board);
-playe.history();

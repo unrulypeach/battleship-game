@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import ShipFactory from './shipFactory';
+import ShipFactory from '../shipFactory';
 
 const mockShip = Object.create(ShipFactory(5));
 
