@@ -36,6 +36,7 @@ h1{
 }
 .ship{
   background-color: salmon;
+  z-index: 1000;
   /* display: inline-flex;
   border: solid 1px black; */
 }
