@@ -42,7 +42,7 @@ export default function GameboardFactory() {
   }
 
   function placeShip(shipNum, yStart, xStart, isVertical) {
-    const ship = Object.create(ShipFactory(shipNum));
+    const ship = Object.create(ShipFactory(shipNum, isVertical));
 
     // horizontal
     if (isVertical === false || typeof isVertical === 'undefined') {
@@ -105,3 +105,6 @@ export default function GameboardFactory() {
     gameOver,
   };
 }
+const x = Object.create(GameboardFactory());
+x.placeShip(5, 0, 1, true);
+x.gb()[0][1].isVert();

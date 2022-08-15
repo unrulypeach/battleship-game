@@ -40,6 +40,9 @@ h1{
   /* display: inline-flex;
   border: solid 1px black; */
 }
+.ship.preview {
+  background-color: lightblue;
+}
 /* .ship > span {
   display: inline-block;
   background-color: rgba(122, 145, 138, 0.753);

@@ -1,4 +1,5 @@
 import { joinTwoNum } from './helpers';
+import { dragstart, dragEnter } from './moveShipsDragDrop';
 
 export default (() => {
   const boardContainerList = document.querySelectorAll('.boardCont');
@@ -10,6 +11,9 @@ export default (() => {
       const gridCell = document.createElement('span');
       gridCell.id = `cell${i}`;
       gridCell.classList.add('cell');
+      gridCell.draggable = 'true';
+      gridCell.ondragstart = dragstart;
+      gridCell.addEventListener('dragenter', dragEnter);
       gridCell.style.height = '20px';
       div.append(gridCell);
     }

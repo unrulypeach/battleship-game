@@ -1,6 +1,6 @@
-export default function ShipFactory(len) {
+export default function ShipFactory(len, isVertical) {
   let hp = len;
-
+  const isVert = isVertical;
   // returns isSunk()
   function isHit() {
     if (hp > 0) {
@@ -16,6 +16,7 @@ export default function ShipFactory(len) {
 
   return {
     hp: () => hp,
+    isVert: () => isVert,
     isHit,
     isSunk,
   };

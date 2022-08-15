@@ -9,50 +9,26 @@ export default function moveShips() {
       if (event.target.classList.contains('undefined')) {
         return;
       }
-      // const name = ship.classList[ship.classList.length - 1];
-      const name = event.currentTarget.classList[event.currentTarget.classList.length - 1];
+      const name = Helper.getShipName(event);
       const getName = document.querySelectorAll(`.${name}`);
 
       // mouse position
       // const posX = event.clientX;
       // const posY = event.clientY;
-
       const getNameIds = Helper.getPcId(getName);
       const nameIdsNum = Helper.arrStrToArrInt(getNameIds);
 
-      // move fns
-      function moveUp(indArr) {
-        const ans = indArr.map((el) => el - 10);
-        return indArr.some((el) => el < 10) ? indArr : ans;
-      }
-      function moveDown(indArr) {
-        const ans = indArr.map((el) => el + 10);
-        return indArr.some((el) => el > 99) ? indArr : ans;
-      }
-      function moveLeft(indArr) {
-        // if some number is divisble by ten then move left = to ship length
-        let ans = indArr.map((el) => el - 1);
-        if (indArr.some((el) => el % 10 === 0)) {
-          ans = indArr.map((el) => el - indArr.length);
-        }
-
-        return indArr.some((el) => el <= 0) ? indArr : ans;
-      }
-      function moveRight(indArr) {
-        const ans = indArr.map((el) => el + 1);
-        return indArr.some((el) => el > 99) ? indArr : ans;
-      }
-      function checkMove(movedArr) {
-        return movedArr.every((el) => el >= 0 && el <= 99);
-      }
       // currPos is nodeList
       // targPos is array of index?
       function setDestination(currPos, targPos) {
-        if (targPos !== undefined) {
+        if (Helper.checkContainShip(targPos)) {
+          // eslint-disable-next-line no-useless-return
+          return;
+        } if (targPos !== undefined) {
           currPos.forEach((el) => {
+            el.classList.toggle('undefined');
             el.classList.toggle('ship');
             el.classList.toggle(name);
-            el.classList.toggle('undefined');
           });
           targPos.forEach((el) => {
             const item = document.querySelector(`#cell${el}`);
@@ -62,7 +38,10 @@ export default function moveShips() {
           });
         }
       }
-      setDestination(getName, moveLeft(nameIdsNum));
+
+      setDestination(getName, Helper.moveLeft(nameIdsNum));
+
+      // ability to rotate ship
 
       // must change pBoard.gb()
       // function changeInternalBoard(){}
@@ -70,9 +49,4 @@ export default function moveShips() {
       // ship.onmouseup = function (ev) {};
     };
   });
-  // ship must be moved in pBoard.gb()
-
-  // ship must be moved in DOM (move below to dom.js?)
-
-  // allow user to rotate ship
 }
